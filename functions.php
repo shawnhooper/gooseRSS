@@ -63,7 +63,7 @@ function sanitize($variable, $keep_newlines = false) {
 			$variable = ($variable === FALSE) ? 0 : 1;
 		break;
 		default:
-			$variable = ($variable === NULL) ? 'NULL' : htmlspecialchars(strip_tags(trim($variable)), ENT_QUOTES);
+			$variable = ($variable === NULL) ? 'NULL' : strip_tags(trim(strval($variable)));
 		break;
 	}
 
@@ -169,16 +169,16 @@ function generate_rss_feed($filtered, $now) {
 	$rss = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	$rss .= "<rss version=\"2.0\">\n";
 	$rss .= "  <channel>\n";
-	$rss .= "    <title>".$filtered['channel_name']."</title>\n";
-	$rss .= "    <description>RSS feed for ".$filtered['channel_name']."</description>\n";
-	$rss .= "    <link>".$filtered['channel_url']."</link>\n";
+	$rss .= "    <title>".htmlspecialchars($filtered['channel_name'], ENT_XML1, 'UTF-8')."</title>\n";
+	$rss .= "    <description>RSS feed for ".htmlspecialchars($filtered['channel_name'], ENT_XML1, 'UTF-8')."</description>\n";
+	$rss .= "    <link>".htmlspecialchars($filtered['channel_url'], ENT_XML1, 'UTF-8')."</link>\n";
 	$rss .= "    <lastBuildDate>".date('r', $now)."</lastBuildDate>\n";
 	$rss .= "    <generator>gooseRSS</generator>\n";
 	
 	foreach($filtered['items'] as $item) {
 		$rss .= "    <item>\n";
-		$rss .= "      <title>".$item['title']."</title>\n";
-		$rss .= "      <link>".$item['link']."</link>\n";
+		$rss .= "      <title>".htmlspecialchars($item['title'], ENT_XML1, 'UTF-8')."</title>\n";
+		$rss .= "      <link>".htmlspecialchars($item['link'], ENT_XML1, 'UTF-8')."</link>\n";
 		$rss .= "      <pubDate>".date("r", $item['date_released'])."</pubDate>\n";
 		$rss .= "      <guid isPermaLink=\"false\">".md5($item['link'])."</guid>\n";
 		$rss .= "      <description><![CDATA[".$item['description']."]]></description>\n";
