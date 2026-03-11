@@ -65,7 +65,7 @@ $current_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 <body id="top">
 	<header>
-		<h1><?php echo $video['title']; ?></h1>
+		<h1><?php echo $video ? $video['title'] : 'Video not found'; ?></h1>
 	</header>
 	
 	<main>
