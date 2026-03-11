@@ -31,8 +31,8 @@ if(substr($handle, 0, 1) != "@") {
 $channel = cache_get($handle, CACHE_YT_PREFIX, 31104000); // 360 days. We don't care for the cache age, just that it's there.
 $video = false;
 if(is_array($channel)) {
-	$key = array_search($video_id, $channel['items']);
-	if(isset($channel['items'][$key])) $video = $channel['items'][$key];
+	$key = array_search($video_id, array_column($channel['items'], 'id'));
+	if($key !== false) $video = $channel['items'][$key];
 }
 
 // Figure out the URL (for sharing this page)
@@ -47,20 +47,20 @@ $current_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>gooseRSS: <?php echo $video['title']; ?></title>
+	<title>gooseRSS: <?php echo $video ? $video['title'] : 'Video not found'; ?></title>
 	<link rel="stylesheet" href="./assets/embed-simple.css">
 
-	<meta name="description" content="<?php echo $channel['channel_name']; ?>: <?php echo $video['title']; ?>" />
+	<meta name="description" content="<?php echo ($channel ? $channel['channel_name'] : 'gooseRSS').': '.($video ? $video['title'] : ''); ?>" />
 	<meta name="generator" content="gooseRSS" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:url" content="<?php echo $current_url; ?>" />
 	<meta property="og:site_name" content="gooseRSS Watch Page" />
-	<meta property="og:title" content="Watch this video from <?php echo $channel['channel_name']; ?>" />
-	<meta property="og:description" content="<?php echo $video['title']; ?>" />
+	<meta property="og:title" content="Watch this video from <?php echo $channel ? $channel['channel_name'] : 'unknown channel'; ?>" />
+	<meta property="og:description" content="<?php echo $video ? $video['title'] : ''; ?>" />
 	<meta property="og:image" content="https://img.youtube.com/vi/<?php echo $video_id; ?>/0.jpg" />
-	<meta property="og:image:alt" content="<?php echo $video['title']; ?>" />
+	<meta property="og:image:alt" content="<?php echo $video ? $video['title'] : ''; ?>" />
 </head>
 
 <body id="top">
