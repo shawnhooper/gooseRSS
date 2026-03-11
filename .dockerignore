@@ -1,0 +1,6 @@
+.git/
+*.md
+*.log
+config.php
+default-config.php
+.dockerignore

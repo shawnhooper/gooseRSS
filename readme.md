@@ -54,6 +54,34 @@ You can find it on most Channel main pages below the header image.
 
 If it's not there you can get it from the channel details or the channel url in your browser.
 
+## Docker
+
+You can run gooseRSS in a docker container, perfect for running in a homelab environment.  Once you've cloned this repository, run:
+
+```bash
+docker compose up -d --build
+```
+
+Then you can get YouTube feeds at: http://localhost:40053/ytrss.php?access=the-access-key&id=channel_handle
+
+and EZTV feeds at http://localhost:40053/eztvrss.php?access=the-access-key&id=tt12345678
+
+Configuration is handled through environment variables in `docker-compose.yml`:
+
+| Variable | Description | Default |
+|---|---|---|
+| `GOOSERSS_URL` | Base URL of the app | `http://localhost:40053/` |
+| `GOOSERSS_ACCESS` | Shared access key for feed URLs | `1234-2468-1357` |
+| `GOOSERSS_QUALITY` | Comma-separated torrent qualities | `720,1080,2160` |
+| `GOOSERSS_EZTV_API` | EZTV API base URL | `https://eztvx.to/api/get-torrents` |
+| `GOOSERSS_USER_AGENT` | User-Agent string for requests | Firefox UA |
+| `GOOSERSS_CACHE_YT_TTL` | YouTube cache lifetime in seconds | `21600` (6 hours) |
+| `GOOSERSS_CACHE_EZTV_TTL` | EZTV cache lifetime in seconds | `86400` (24 hours) |
+| `GOOSERSS_SUCCESS_LOG` | Log successful runs | `false` |
+| `GOOSERSS_ERROR_LOG` | Log errors | `false` |
+
+Cache files are stored in a named Docker volume so they persist across container restarts.
+
 ## Technical Stuff
 - All feeds are cached as serialized files. 
 - The cache default is 6 hours for YouTube and 24 hours for EZTV.

@@ -1,0 +1,20 @@
+services:
+  gooserss:
+    build: .
+    ports:
+      - "40053:80"
+    environment:
+      - GOOSERSS_URL=http://localhost:40053/
+      - GOOSERSS_ACCESS=1234-2468-1357
+      - GOOSERSS_QUALITY=720,1080,2160
+      - GOOSERSS_EZTV_API=https://eztvx.to/api/get-torrents
+      - GOOSERSS_CACHE_YT_TTL=21600
+      - GOOSERSS_CACHE_EZTV_TTL=86400
+      - GOOSERSS_SUCCESS_LOG=false
+      - GOOSERSS_ERROR_LOG=false
+    volumes:
+      - gooserss-cache:/var/www/html/cache
+    restart: unless-stopped
+
+volumes:
+  gooserss-cache:
