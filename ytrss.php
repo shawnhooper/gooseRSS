@@ -105,8 +105,7 @@ if(!$filtered) {
 		}
 
 		// Only add unique videos
-		$key = array_search($video_id, $filtered['items']);
-		if(!isset($filtered['items'][$key])) {
+		if(!in_array($video_id, array_column($filtered['items'], 'id'))) {
 			// Format description, if there is a description
 			if(strlen($description) > 0) {
 				$description = htmlspecialchars($description);

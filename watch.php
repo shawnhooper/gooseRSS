@@ -38,6 +38,7 @@ if(is_array($channel)) {
 // Figure out the URL (for sharing this page)
 $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
 $current_url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
 ?>
 
 <!DOCTYPE html>
