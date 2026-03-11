@@ -20,12 +20,6 @@ require_once(__DIR__ . '/functions.php');
 $access_key = isset($_GET['access']) ? sanitize($_GET['access']) : '';
 $handle = isset($_GET['id']) ? strtolower(sanitize($_GET['id'])) : '';
 
-// Basic "security"
-if(empty($access_key) OR $access_key !== trim(ACCESS)) {
-	if(ERROR_LOG) logger('YT: Access key incorrect.');
-	exit;
-}
-
 // Retrieve Channel Handle */
 if(empty($handle)) {
 	if(ERROR_LOG) logger('YT: Missing `id` query parameter.');
